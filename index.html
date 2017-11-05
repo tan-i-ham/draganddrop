@@ -29,42 +29,27 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
             theme = $.jqx.theme;
             var productsOffset = 3,
                 products = {
-                    'Retro Rock T-shirt': {
-                        pic: 'black-retro-rock-band-guitar-controller.png',
-                        price: 15
+                    '鴻海': {
+                        code: '2317',
+                        price: 110
                     },
-                    'Lucky T-shirt': {
-                        pic: 'bright-green-gettin-lucky-in-kentucky.png',
-                        price: 18
+                    '微星': {
+                        code: '2377',
+                        price: 76
                     },
-                    'Loading T-shirt': {
-                        pic: 'brown-loading-bar-computer-geek.png',
-                        price: 25
+                    '台積電': {
+                        code: '2330',
+                        price: 200
                     },
-                    'Cool Story T-shirt': {
-                        pic: 'cool-story-bro.png',
-                        price: 20
+                    '國泰金': {
+                        code: '2882',
+                        price: 50
                     },
-                    'The beard T-shirt': {
-                        pic: 'fear-the-beard.png',
-                        price: 17
+                    '統一超': {
+                        code: '2912',
+                        price: 270
                     },
-                    'Don\'t care T-shirt': {
-                        pic: 'honey-badger-don-t-care.png',
-                        price: 19
-                    },
-                    'Guitar T-shirt': {
-                        pic: 'scott-pilgrim-red-rock-band.png',
-                        price: 24
-                    },
-                    'Dodgers T-shirt': {
-                        pic: '2-sided-dodgers-bankrupt-t-shirt-ash.png',
-                        price: 21
-                    },
-                    'Misfits T-shirt': {
-                        pic: 'misfits-sf-giants-white.png',
-                        price: 21
-                    }
+
                 },
                 theme, onCart = false,
                 cartItems = [],
@@ -96,15 +81,15 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
                     product = products[name];
                     image = createProduct(name, product);
                     image.appendTo(catalog);
-                    if (counter !== 0 && counter % 3 === 0) {
-                        top += 147; // image.outerHeight() + productsOffset;
+                    if (counter !== 0 && counter % 4 === 0) {
+                        top += 80; // image.outerHeight() + productsOffset;
                         left = 0;
                     }
                     image.css({
                         left: left,
                         top: top
                     });
-                    left += 127; // image.outerWidth() + productsOffset;
+                    left += 200; // image.outerWidth() + productsOffset;
                     counter += 1;
                 }
                 $('.draggable-demo-product').jqxDragDrop({
@@ -114,35 +99,42 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
             };
 
             function createProduct(name, product) {
-                return $('<div class="draggable-demo-product jqx-rc-all">' +
+                return $('<div class="draggable-demo-product jqx-rc-all">' + '<div class="draggable-demo-product-code">' + product.code + '</div>' +
                     '<div class="jqx-rc-t draggable-demo-product-header jqx-widget-header-' + theme + ' jqx-fill-state-normal-' + theme + '">' +
                     '<div class="draggable-demo-product-header-label"> ' + name + '</div></div>' +
                     '<div class="jqx-fill-state-normal-' + theme + ' draggable-demo-product-price">Price: <strong>$' + product.price + '</strong></div>' +
-                    '<img src="../../images/t-shirts/' + product.pic + '" alt=' +
-                    name + '" class="jqx-rc-b" />' +
+
                     '</div>');
             };
-
+            // 右邊表格的結構欄位
             function gridRendering() {
                 $("#jqxgrid").jqxGrid({
                     height: 335,
-                    width: 230,
+                    width: '100%',
 
                     keyboardnavigation: false,
                     selectionmode: 'none',
                     columns: [{
-                        text: 'Item',
-                        dataField: 'name',
-                        width: 120
+                        text: '代碼',
+                        dataField: 'code',
+                        width: '10%',
                     }, {
-                        text: 'Count',
+                        text: '標的',
+                        dataField: 'name',
+                        width: '30%',
+                    }, {
+                        text: '數量',
                         dataField: 'count',
                         width: 50
                     }, {
-                        text: 'Remove',
+                        text: '價格',
+                        dataField: 'price',
+                        width: 60
+                    }, {
+                        text: '移除',
                         dataField: 'remove',
                         width: 60
-                    }]
+                    }, ]
                 });
                 $("#jqxgrid").bind('cellclick', function(event) {
                     var index = event.args.rowindex;
@@ -175,6 +167,7 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
                 } else {
                     var id = cartItems.length,
                         item = {
+                            code: item.code,
                             name: item.name,
                             count: 1,
                             price: item.price,
@@ -226,6 +219,7 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
                         name: key,
                         price: obj[key].count,
                         count: obj[key].price,
+                        code: obj[key].code,
                         number: counter
                     }
                     array.push(item);
@@ -235,19 +229,15 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
             };
 
             function addEventListeners() {
-                $('.draggable-demo-product').mouseenter(function() {
-                    $(this).children('.draggable-demo-product-price').fadeTo(100, 0.9);
-                });
-                $('.draggable-demo-product').mouseleave(function() {
-                    $(this).children('.draggable-demo-product-price').fadeTo(100, 0);
-                });
+
+
                 $('.draggable-demo-product').bind('dropTargetEnter', function(event) {
-                    $(event.args.target).css('border', '2px solid #000');
+                    $(event.args.target).css('border', '5px solid #000');
                     onCart = true;
                     $(this).jqxDragDrop('dropAction', 'none');
                 });
                 $('.draggable-demo-product').bind('dropTargetLeave', function(event) {
-                    $(event.args.target).css('border', '2px solid #aaa');
+                    $(event.args.target).css('border', '1px solid #aaa');
                     onCart = false;
                     $(this).jqxDragDrop('dropAction', 'default');
                 });
@@ -256,19 +246,22 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
                     if (onCart) {
                         addItem({
                             price: event.args.price,
-                            name: event.args.name
+                            name: event.args.name,
+                            code: event.args.code,
                         });
                         onCart = false;
                     }
                 });
                 $('.draggable-demo-product').bind('dragStart', function(event) {
                     var tshirt = $(this).find('.draggable-demo-product-header').text(),
-                        price = $(this).find('.draggable-demo-product-price').text().replace('Price: $', '');
+                        price = $(this).find('.draggable-demo-product-price').text().replace('Price: $', ''),
+                        code = $(this).find('.draggable-demo-product-code').text();
                     $('#cart').css('border', '2px solid #aaa');
                     price = parseInt(price, 10);
                     $(this).jqxDragDrop('data', {
                         price: price,
-                        name: tshirt
+                        name: tshirt,
+                        code: code,
                     });
                 });
             };
@@ -287,6 +280,8 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
 <body class='default'>
     <div id="shop" class="draggable-demo-shop jqx-rc-all">
         <div id="catalog" class="left jqx-rc-all"></div>
+
+
         <div class="right jqx-rc-all">
             <div class="draggable-demo-title jqx-rc-t">Shopping Cart</div>
             <div id='cart' class="draggable-demo-cart jqx-rc-all">

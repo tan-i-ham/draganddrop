@@ -1,19 +1,19 @@
 .draggable-demo-cart {
     border: 2px dashed #aaa;
     padding: 5px;
-    width: 232px;
+    width: 90%;
     margin: auto;
 }
 
 .draggable-demo-shop {
     border: 1px solid yellow;
-    width: 700px;
+    width: 100%;
     padding: 5px;
 }
 
 .left {
     position: relative;
-    width: 400px;
+    width: 55%;
     border: 2px solid blue;
     height: 457px;
     float: left;
@@ -23,45 +23,43 @@
     width: 150px;
 }
 
+
+/* 主要的div */
+
+.draggable-demo-product-code {
+    background-color: pink;
+    width: 30px;
+    font-size: 12px;
+}
+
 .draggable-demo-product {
     padding: 5px;
-    border: 1px solid #888;
-    width: 115px;
-    height: 135px;
+    border: 2px solid green;
+    width: 20%;
+    height: 60px;
     background-color: #fff;
     position: absolute;
     margin: 5px;
 }
 
-.draggable-demo-product img {
-    width: 113px;
-    border: 1px solid #aaa;
-    border-top-width: 0px;
-    outline-width: 15px;
-}
-
 .draggable-demo-product-header {
-    border: 1px solid #888;
+    border: 1px solid black;
     height: 20px;
-    border-bottom-width: 0px;
+    width: 100%;
+    /* border-bottom-width: 0px; */
     font-size: 13px;
     position: relative;
     text-align: center;
 }
 
-.draggable-demo-product-header-label {
-    margin-top: 3px;
-}
-
 .draggable-demo-product-price {
     position: absolute;
-    top: 124px;
     left: 6px;
-    width: 113px;
+    top: 40px;
+    width: 150px;
     text-align: center;
     font-family: Verdana;
     font-size: 11px;
-    display: none;
     height: 16px;
     border-top: 1px solid #888;
     border-bottom: 1px solid #fff;
@@ -78,10 +76,10 @@
 }
 
 .right {
-    float: right;
+    float: left;
     border: 1px solid red;
     height: 457px;
-    width: 260px;
+    width: 40%;
 }
 
 .draggable-demo-total {
