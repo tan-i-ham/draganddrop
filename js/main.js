@@ -27,11 +27,19 @@ var cart = (function($) {
                 type: '股票',
                 price: 270
             },
+            'fund 1': {
+                code: '8888',
+                type: '基金',
+                price: 8
+            },
 
         },
         theme, onCart = false,
         cartItems = [],
         totalPrice = 0;
+    total_stock = 0;
+    total_debt = 0;
+
 
     function render() {
         productsRendering();
@@ -129,46 +137,7 @@ var cart = (function($) {
 
             ]
         });
-        $("#jqxgrid2").jqxGrid({
-            height: 335,
-            width: '100%',
 
-            keyboardnavigation: false,
-            selectionmode: 'none',
-            columns: [{
-                    text: '代碼',
-                    dataField: 'code',
-                    width: '20%',
-                    cellsrenderer: linkrenderer,
-                }, {
-                    text: '標的',
-                    dataField: 'name',
-                    width: '20%',
-
-                },
-                {
-                    text: '類型',
-                    dataField: 'type',
-                    width: '20%',
-
-                }, {
-                    text: '數量',
-                    dataField: 'count',
-                    width: '20%',
-
-                }, {
-                    text: '價格',
-                    dataField: 'price',
-                    width: '10%',
-
-                }, {
-                    text: '移除',
-                    dataField: 'remove',
-                    width: '10%',
-                },
-
-            ]
-        });
 
         $("#jqxgrid").bind('cellclick', function(event) {
             var index = event.args.rowindex;
@@ -184,20 +153,7 @@ var cart = (function($) {
                 updatePrice(-item.price);
             }
         });
-        $("#jqxgrid2").bind('cellclick', function(event) {
-            var index = event.args.rowindex;
-            if (event.args.datafield == 'remove') {
-                var item = cartItems[index];
-                if (item.count > 1) {
-                    item.count -= 1;
-                    updateGridRow(index, item);
-                } else {
-                    cartItems.splice(index, 1);
-                    removeGridRow(index);
-                }
-                updatePrice(-item.price);
-            }
-        });
+
     };
     // value是股票代碼
     var linkrenderer = function(row, column, value) {
