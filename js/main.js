@@ -29,7 +29,7 @@ var cart = (function($) {
             },
             'fund 1': {
                 code: '8888',
-                type: '基金',
+                type: '債券',
                 price: 8
             },
 
@@ -150,7 +150,8 @@ var cart = (function($) {
                     cartItems.splice(index, 1);
                     removeGridRow(index);
                 }
-                updatePrice(-item.price);
+                updatePrice_remove(item);
+
             }
         });
 
@@ -206,14 +207,51 @@ var cart = (function($) {
             cartItems.push(item);
             addGridRow(item);
         }
-        updatePrice(item.price);
+        // updatePrice2(item.price);
+        updatePrice(item);
+
     };
 
 
-    function updatePrice(price) {
-        totalPrice += price;
+
+    function updatePrice(item) {
+        totalPrice += item.price;
         $('#total').html('$ ' + totalPrice);
+        // console.log(item);
+        if (item.type == '股票') {
+            total_stock += item.price;
+            $('#total_stock').html('$ ' + total_stock);
+        } else {
+            total_debt += item.price;
+            $('#total_debt').html('$ ' + total_debt);
+        }
+        var f = (total_stock / totalPrice);
+        var sr = (parseFloat(f) * 100).toFixed(2);
+
+        $('#stock_ratio').html(sr + ' %');
+        $('#debt_ratio').html((100 - sr).toFixed(2) + ' %');
     };
+
+    function updatePrice_remove(item) {
+        totalPrice -= item.price;
+        $('#total').html('$ ' + totalPrice);
+        if (item.type == '股票') {
+            total_stock -= item.price;
+            $('#total_stock').html('$ ' + total_stock);
+        } else {
+            total_debt -= item.price;
+            $('#total_debt').html('$ ' + total_debt);
+
+        }
+        var f = (total_stock / totalPrice);
+        var sr = (parseFloat(f) * 100).toFixed(2);
+
+        $('#stock_ratio').html(sr + ' %');
+        $('#debt_ratio').html((100 - sr).toFixed(2) + ' %');
+
+    }
+
+
 
     function addGridRow(row) {
         $("#jqxgrid").jqxGrid('addrow', null, row);
@@ -257,9 +295,10 @@ var cart = (function($) {
         return array;
     };
 
+
+
     function addEventListeners() {
-
-
+        // drag drop related
         $('.draggable-demo-product').bind('dropTargetEnter', function(event) {
             $(event.args.target).css('border', '5px solid #000');
             onCart = true;
@@ -303,8 +342,53 @@ var cart = (function($) {
     }
 }($));
 
-$(document).ready(function() {
-    cart.init();
 
+
+
+// $(document).ready(function() {
+
+// });
+function slider() {
+    function displayEvent(event) {
+        var eventData = event.type;
+        eventData += ': ' + event.args.value;
+        $('#events').jqxPanel('clearContent');
+        $('#events').jqxPanel('prepend', '<div class="item" style="margin-top: 5px;">' + eventData + '</div>');
+
+
+    }
+    $('#events').jqxPanel({
+        height: '250px',
+        width: '450px'
+    });
+    $('#jqxSlider div').css('margin', '5px');
+    //change event
+    $('#jqxSlider').jqxSlider({
+        template: "success",
+        tooltip: true,
+        mode: 'fixed',
+        width: '100%',
+        height: 60,
+        min: 0,
+        max: 100,
+        value: 10,
+        ticksFrequency: 10,
+        showMinorTicks: true,
+        minorTicksFrequency: 1,
+        showTickLabels: true
+    });
+
+
+    $('#jqxSlider').on('change', function(event) {
+        displayEvent(event);
+        console.log(event);
+    });
+}
+$(document).ready(function() {
+
+    slider();
+    cart.init();
+    // $('#jqxSlider').arg.value = (total_stock / totalPrice).toFixed(2);
+    console.log($('#jqxSlider'));
 
 });

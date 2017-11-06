@@ -79,7 +79,6 @@
 .right {
     float: left;
     border: 1px solid red;
-    height: 457px;
     /* width: 100%; */
 }
 
@@ -89,4 +88,5 @@
     margin: 6px;
     margin-top: 7px;
     padding: 7px;
+    display: inline-block;
 }
