@@ -27,7 +27,7 @@ var cart = (function($) {
                 type: '股票',
                 price: 270
             },
-            'fund 1': {
+            'debt 1': {
                 code: '8888',
                 type: '債券',
                 price: 8
@@ -53,7 +53,7 @@ var cart = (function($) {
         $('.draggable-demo-total').addClass('jqx-expander-header-' + theme).addClass('jqx-expander-header-expanded-' + theme);
         if (theme === 'shinyblack') {
             $('.draggable-demo-shop').css('background-color', '#555');
-            $('.draggable-demo-product').css('background-color', '#999');
+            $('.product').css('background-color', '#999');
         }
     };
 
@@ -78,7 +78,7 @@ var cart = (function($) {
             left += 200; // image.outerWidth() + productsOffset;
             counter += 1;
         }
-        $('.draggable-demo-product').jqxDragDrop({
+        $('.product').jqxDragDrop({
             dropTarget: $('.target'),
 
             revert: true
@@ -87,11 +87,17 @@ var cart = (function($) {
     };
 
     function createProduct(name, product) {
-        return $('<div class="draggable-demo-product jqx-rc-all">' + '<div class="draggable-demo-product-code">' + product.code + '</div>' +
-            '<div class="draggable-demo-product-type">' + product.type + '</div>' +
-            '<div class="jqx-rc-t draggable-demo-product-header jqx-widget-header-' + theme + ' jqx-fill-state-normal-' + theme + '">' +
-            '<div class="draggable-demo-product-header-label"> ' + name + '</div></div>' +
-            '<div class="jqx-fill-state-normal-' + theme + ' draggable-demo-product-price">Price: <strong>$' + product.price + '</strong></div>' +
+        var eng_type;
+        if (product.type == '股票') {
+            eng_type = "stock";
+        } else if (product.type == '債券') {
+            eng_type = "debt";
+        }
+        return $('<div class="product jqx-rc-all ' + eng_type + '">' + '<div class="product-code">' + product.code + '</div>' +
+            '<div class="product-type">' + product.type + '</div>' +
+            '<div class="jqx-rc-t product-header jqx-widget-header-' + theme + ' jqx-fill-state-normal-' + theme + '">' +
+            '<div class="product-header-label"> ' + name + '</div></div>' +
+            '<div class="jqx-fill-state-normal-' + theme + ' product-price">Price: <strong>$' + product.price + '</strong></div>' +
 
             '</div>');
     };
@@ -299,17 +305,17 @@ var cart = (function($) {
 
     function addEventListeners() {
         // drag drop related
-        $('.draggable-demo-product').bind('dropTargetEnter', function(event) {
+        $('.product').bind('dropTargetEnter', function(event) {
             $(event.args.target).css('border', '5px solid #000');
             onCart = true;
             $(this).jqxDragDrop('dropAction', 'none');
         });
-        $('.draggable-demo-product').bind('dropTargetLeave', function(event) {
+        $('.product').bind('dropTargetLeave', function(event) {
             $(event.args.target).css('border', '1px solid #aaa');
             onCart = false;
             $(this).jqxDragDrop('dropAction', 'default');
         });
-        $('.draggable-demo-product').bind('dragEnd', function(event) {
+        $('.product').bind('dragEnd', function(event) {
             $('#stock').css('border', '2px dashed #aaa');
             if (onCart) {
                 addItem({
@@ -321,11 +327,11 @@ var cart = (function($) {
                 onCart = false;
             }
         });
-        $('.draggable-demo-product').bind('dragStart', function(event) {
-            var tshirt = $(this).find('.draggable-demo-product-header').text(),
-                price = $(this).find('.draggable-demo-product-price').text().replace('Price: $', ''),
-                code = $(this).find('.draggable-demo-product-code').text(),
-                type = $(this).find('.draggable-demo-product-type').text();
+        $('.product').bind('dragStart', function(event) {
+            var tshirt = $(this).find('.product-header').text(),
+                price = $(this).find('.product-price').text().replace('Price: $', ''),
+                code = $(this).find('.product-code').text(),
+                type = $(this).find('.product-type').text();
             $('#stock').css('border', '2px solid #aaa');
             price = parseInt(price, 10);
             $(this).jqxDragDrop('data', {

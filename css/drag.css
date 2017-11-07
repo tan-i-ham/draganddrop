@@ -21,14 +21,10 @@
     float: left;
 }
 
-.draggable-demo-product-image {
-    width: 150px;
-}
-
 
 /* 主要的product div */
 
-.draggable-demo-product {
+.product {
     padding: 5px;
     border: 2px solid green;
     width: 80%;
@@ -38,15 +34,15 @@
     margin: 5px;
 }
 
-.draggable-demo-product-code,
-.draggable-demo-product-type {
+.product-code,
+.product-type {
     background-color: pink;
     width: 30px;
     font-size: 12px;
     display: inline-block;
 }
 
-.draggable-demo-product-header {
+.product-header {
     border: 1px solid black;
     /* border-bottom-width: 0px; */
     width: 50%;
@@ -56,7 +52,7 @@
     display: inline-block;
 }
 
-.draggable-demo-product-price {
+.product-price {
     width: 100%;
     text-align: center;
     font-family: Verdana;
@@ -89,4 +85,15 @@
     margin-top: 7px;
     padding: 7px;
     display: inline-block;
+}
+
+
+/* type color */
+
+.stock {
+    background-color: lightgoldenrodyellow;
+}
+
+.debt {
+    background-color: plum;
 }
