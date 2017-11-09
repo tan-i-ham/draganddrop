@@ -17,7 +17,8 @@
 
 .left {
     position: relative;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
+    border-top: none;
     float: left;
 }
 
@@ -27,7 +28,7 @@
 .product {
     padding: 5px;
     border: 2px solid green;
-    width: 80%;
+    width: 40%;
     /* height: 80px; */
     background-color: #fff;
     position: absolute;
@@ -45,7 +46,7 @@
 .product-header {
     border: 1px solid black;
     /* border-bottom-width: 0px; */
-    width: 50%;
+    width: 40%;
     font-size: 14px;
     padding: 5px;
     text-align: center;
@@ -96,4 +97,8 @@
 
 .debt {
     background-color: plum;
+}
+
+.only-expanded {
+    /* display: none */
 }

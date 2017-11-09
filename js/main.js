@@ -27,10 +27,25 @@ var cart = (function($) {
                 type: '股票',
                 price: 270
             },
-            'debt 1': {
+            'debt_1': {
                 code: '8888',
                 type: '債券',
                 price: 8
+            },
+            'debt_3': {
+                code: '8000',
+                type: '債券',
+                price: 83
+            },
+            'debt_4': {
+                code: '1900',
+                type: '債券',
+                price: 58
+            },
+            'debt_7': {
+                code: '1234',
+                type: '債券',
+                price: 91
             },
 
         },
@@ -57,17 +72,34 @@ var cart = (function($) {
         }
     };
 
+
+    // data shuffle
+    function pickRandomProperty(obj) {
+        var result;
+        var count = 0;
+        for (var prop in obj)
+            if (Math.random() < 1 / ++count)
+                result = prop;
+        return result;
+    }
+
     function productsRendering() {
         var catalog = $('#catalog'),
+            hot1 = $('#combine_hot1'),
+            hot2 = $('#combine_hot2'),
+
             imageContainer = $('</div>'),
             image, product, left = 0,
             top = 0,
             counter = 0;
+
+        // console.log(products.length);
+
         for (var name in products) {
             product = products[name];
             image = createProduct(name, product);
             image.appendTo(catalog);
-            if (counter !== 0 && counter % 1 === 0) {
+            if (counter !== 0 && counter % 2 === 0) {
                 top += 80; // image.outerHeight() + productsOffset;
                 left = 0;
             }
@@ -78,6 +110,62 @@ var cart = (function($) {
             left += 200; // image.outerWidth() + productsOffset;
             counter += 1;
         }
+
+        image, product, left = 0,
+            top = 0,
+            counter = 0;
+        var b_ob = 0;
+
+        for (var i = 0; i < 6; i++) {
+            var tempname = pickRandomProperty(products);
+
+            if (i > 0 && tempname == b_ob) {
+                tempname = pickRandomProperty(products);
+                console.log(tempname);
+            }
+            b_ob = tempname;
+            product = products[tempname];
+            image = createProduct(tempname, product);
+            image.appendTo(hot1);
+
+            if (counter !== 0 && counter % 2 === 0) {
+                top += 80; // image.outerHeight() + productsOffset;
+                left = 0;
+            }
+            image.css({
+                left: left,
+                top: top
+            });
+            left += 200; // image.outerWidth() + productsOffset;
+            counter += 1;
+        }
+        image, product, left = 0,
+            top = 0,
+            counter = 0;
+        for (var name in products) {
+
+            var tempname = pickRandomProperty(products);
+
+            product = products[tempname];
+            image = createProduct(tempname, product);
+            image.appendTo(hot2);
+
+            if (counter !== 0 && counter % 2 === 0) {
+                top += 80; // image.outerHeight() + productsOffset;
+                left = 0;
+            }
+            image.css({
+                left: left,
+                top: top
+            });
+            left += 200; // image.outerWidth() + productsOffset;
+            counter += 1;
+            if (counter == 3) {
+                break;
+            }
+        }
+
+
         $('.product').jqxDragDrop({
             dropTarget: $('.target'),
 
@@ -93,13 +181,16 @@ var cart = (function($) {
         } else if (product.type == '債券') {
             eng_type = "debt";
         }
-        return $('<div class="product jqx-rc-all ' + eng_type + '">' + '<div class="product-code">' + product.code + '</div>' +
+        return $('<div class="product jqx-rc-all ' + eng_type + '">' +
+
+            '<div class="product-code">' + product.code + '</div>' +
             '<div class="product-type">' + product.type + '</div>' +
+
             '<div class="jqx-rc-t product-header jqx-widget-header-' + theme + ' jqx-fill-state-normal-' + theme + '">' +
             '<div class="product-header-label"> ' + name + '</div></div>' +
             '<div class="jqx-fill-state-normal-' + theme + ' product-price">Price: <strong>$' + product.price + '</strong></div>' +
-
-            '</div>');
+            '</div>'
+        );
     };
     // 右邊表格的結構欄位
     function gridRendering() {
@@ -394,7 +485,5 @@ $(document).ready(function() {
 
     slider();
     cart.init();
-    // $('#jqxSlider').arg.value = (total_stock / totalPrice).toFixed(2);
-    console.log($('#jqxSlider'));
 
 });

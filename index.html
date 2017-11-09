@@ -6,6 +6,8 @@
     <meta name="description" content="jqxDragDrop is a plugin which will make any DOM element draggable. It can be used in 
 combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
     <title id='Description'>drag target to right</title>
+
+
     <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
     <link rel="stylesheet" href="css/drag.css" type="text/css" />
 
@@ -27,25 +29,57 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
     <script type="text/javascript" src="jqwidgets/jqxpanel.js"></script>
     <script type="text/javascript" src="js/demos.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
 
+    <!-- tabs import -->
+    <script type="text/javascript" src="jqwidgets/jqxtabs.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqxcombobox.js"></script>
 
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <script>
-    </script>
+
+
 </head>
 
-<body>
+<body class="default">
 
 
     <div class="container-fluid">
+
         <div id="shop" class="row draggable-demo-shop jqx-rc-all">
 
-            <div id="catalog" class="left jqx-rc-all col-lg-2"></div>
-            <div class="col-lg-10">
-                <h1>您的投資組合</h1>
-                <div class="col-lg-8 right jqx-rc-all">
 
+            <div id='tabs' class="col-lg-4" style="height: 100%; padding: 0;">
+                <ul>
+                    <li style="margin-left: 30px;">所有標的</li>
+                    <li>熱門組合 1</li>
+                    <li>熱門組合 2</li>
+                    <li>熱門組合 3</li>
+                    <li>熱門組合 4</li>
+                    <li>熱門組合 5</li>
+
+
+
+                </ul>
+                <div id="catalog" class="left jqx-rc-all col-lg-12"></div>
+                <div id="combine_hot1" class="left jqx-rc-all col-lg-12"></div>
+                <div id="combine_hot2" class="left jqx-rc-all col-lg-12"></div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+
+
+
+
+            </div>
+
+
+
+            <div class="col-lg-6">
+                <h1>您的投資組合</h1>
+                <div class=" right jqx-rc-all">
 
                     <div class="draggable-demo-title jqx-rc-t">股票</div>
 
@@ -69,6 +103,7 @@ combination with many widgets like jqxTree, jqxGrid, jqxListBox and etc." />
 
             </div>
         </div>
+
         <div class="row">
 
 
